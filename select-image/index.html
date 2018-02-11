@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>select image</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ </head>
+ <body>
+
+  <h1>Show images from multiple select</h1>
+
+  <select id="id_images" class="" name="" multiple="">
+    <!-- add option in js
+    <option value="1">Пункт 1</option>
+    <option value="2">Пункт 2</option>
+    <option value="3">3</option>
+    <option selected value="4">4</option>
+    -->
+  </select>
+
+  <div id='imagesShow'>
+    <h3>Selected images</h3>
+  </div>
+
+ </body>
+
+ <script>
+  let imagesDict = {
+    '1':'image.jpg',
+    '5':'image.jpg',
+    '3':'image.jpg',
+    '4':'image.jpg'
+  };
+  //вывожу картинки в imagesShow
+  //var imagesShow = $("#imagesShow");
+  /*
+  for (let key in imagesDict) {
+    imagesShow.append("&#9;")
+    imagesShow.append("<image id="+ key +" src="+ imagesDict[key] +" width='200'>");
+  }
+  */
+
+  var selectImages = $("#id_images");
+
+  // add selectImages option
+  for (let key in imagesDict) {
+    selectImages.append("<option value="+ key +">"+ imagesDict[key] +"</option>");
+  }
+
+  // set as selected
+  selectImages.val(["1","4"]);
+
+  // display selected images from selectImagesId to divImagesId
+  function displayImages(selectImagesId, divImagesId){
+
+    //get listImages from <select> with id selectImagesId
+    let selectImages = $("#"+selectImagesId);
+    let listImages = selectImages.val()
+
+    // div to show images
+    let divImages = $("#" + divImagesId);
+
+    //clear divImages
+    divImages.empty();
+
+    // add html image to divImages
+    $.each(listImages,function(index, value){
+      divImages.append("&#9;") //tab character
+      let imgSrc = imagesDict[value]
+      divImages.append("<image id="+ value +" src="+ imgSrc +" width='200'>");
+    })
+  }
+
+  // show selected images
+  $("#id_images").change( function () {
+    displayImages("id_images", "imagesShow");
+  });
+
+  //show images on load
+  displayImages("id_images", "imagesShow");
+
+ </script>
+</html>
